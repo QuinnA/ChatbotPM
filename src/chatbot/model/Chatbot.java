@@ -1,5 +1,10 @@
 package chatbot.model;
 
+/**
+ * The chatbot model class.  Used for checking and manipulating Strings.
+ * @author Cody Henrichsen
+ * @version 1.1 9/26/14
+ */
 public class Chatbot
 {
 
@@ -31,6 +36,13 @@ public class Chatbot
 		return chatCount;
 	}
 	
+	/**
+	 * This is a really important method.  Add lots of lines
+	 * see more lines
+	 * and even more
+	 * wowwww...
+	 * @param name The new name for the chatbot.
+	 */
 	public void setName(String name)
 	{
 		this.name = name;
