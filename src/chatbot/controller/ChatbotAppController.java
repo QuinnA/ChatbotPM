@@ -21,7 +21,7 @@ public class ChatbotAppController
 	{
 		String result = applicationView.showChatbot("Cody");
 		
-		if (result.equalsIgnoreCase("exit"))
+		if (mySillyChatbot.quitChecker(result))
 		{
 			quit();
 		}
@@ -29,7 +29,7 @@ public class ChatbotAppController
 	
 	private void quit()
 	{
-		JOptionPane.showMessageDialog(null, "good bye cruel world");
+		JOptionPane.showMessageDialog(null, "goodbye cruel world");
 		System.exit(0);
 		
 	}

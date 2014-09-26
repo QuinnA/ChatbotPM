@@ -40,4 +40,16 @@ public class Chatbot
 	{
 		chatCount++;
 	}
+	
+	public boolean quitChecker(String input)
+	{
+		boolean okToQuit = false;
+		
+		if(input.equals("sayonara"))
+		{
+			okToQuit = true;
+		}
+		
+		return okToQuit;
+	}
 }
