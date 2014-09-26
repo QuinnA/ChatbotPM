@@ -12,6 +12,11 @@ public class Chatbot
 		chatCount = 0;
 	}
 	
+	
+	/**
+	 * Returns the name of the Chatbot object.
+	 * @return The current name of the Chatbot.
+	 */
 	public String getName()
 	{
 		return name;
