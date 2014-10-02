@@ -1,5 +1,7 @@
 package chatbot.model;
 
+import java.util.ArrayList;
+
 /**
  * The chatbot model class.  Used for checking and manipulating Strings.
  * @author Cody Henrichsen
@@ -7,7 +9,7 @@ package chatbot.model;
  */
 public class Chatbot
 {
-
+	private ArrayList<String> memeList;
 	private String name;
 	private int chatCount;
 	
@@ -19,6 +21,19 @@ public class Chatbot
 	{
 		this.name = name;
 		chatCount = 0;
+	}
+	
+	/**
+	 * Processes input from the user against the checker methods.  Returns the next output for the view.
+	 * @param currentInput The supplied text.
+	 * @return The processed text based on checker or other methods.
+	 */
+	public String processText(String currentInput)
+	{
+		String result = "";
+		
+		
+		return result;
 	}
 	
 	
@@ -37,10 +52,7 @@ public class Chatbot
 	}
 	
 	/**
-	 * This is a really important method.  Add lots of lines
-	 * see more lines
-	 * and even more
-	 * wowwww...
+	 * Sets the name of the Chatbot to the supplied name.
 	 * @param name The new name for the chatbot.
 	 */
 	public void setName(String name)
@@ -57,7 +69,7 @@ public class Chatbot
 	{
 		boolean okToQuit = false;
 		
-		if(input.equals("sayonara"))
+		if(input != null && input.equals("sayonara"))
 		{
 			okToQuit = true;
 		}
