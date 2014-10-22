@@ -3,6 +3,7 @@ package chatbot.controller;
 import javax.swing.JOptionPane;
 
 import chatbot.model.Chatbot;
+import chatbot.view.ChatbotFrame;
 import chatbot.view.ChatbotView;
 
 /**
@@ -28,6 +29,10 @@ public class ChatbotAppController
 	 * The message provided when the user quits the application.
 	 */
 	private String quitMessage;
+	/**
+	 * Reference to the GUI JFrame object for the application.
+	 */
+	private ChatbotFrame appFrame;
 	
 	/**
 	 * Constructor for the AppController. Initializes the Model and View components.
@@ -35,6 +40,7 @@ public class ChatbotAppController
 	public ChatbotAppController()
 	{
 		applicationView = new ChatbotView(this);
+		appFrame = new ChatbotFrame(this);
 		mySillyChatbot = new Chatbot("Derf");
 		startMessage = "Welcome to the " + mySillyChatbot.getName() + " chatbot. What is your name?";
 		quitMessage = "goodbye cruel user :(";
@@ -56,12 +62,12 @@ public class ChatbotAppController
 	{
 		String result = applicationView.showChatbotDialog(startMessage);
 		
-		while(!mySillyChatbot.quitChecker(result))
-		{
-			result = mySillyChatbot.processText(result);
-			result = applicationView.showChatbotDialog(result);
-		}
-		quit();
+//		while(!mySillyChatbot.quitChecker(result))
+//		{
+//			result = mySillyChatbot.processText(result);
+//			result = applicationView.showChatbotDialog(result);
+//		}
+//		quit();
 	}
 	
 	/**

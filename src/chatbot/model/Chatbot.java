@@ -3,9 +3,10 @@ package chatbot.model;
 import java.util.ArrayList;
 
 /**
- * The chatbot model class.  Used for checking and manipulating Strings.
+ * The chatbot model class. Used for checking and manipulating Strings.
+ * 
  * @author Cody Henrichsen
- * @version 1.1 9/26/14
+ * @version 1.2 10/9/14
  */
 public class Chatbot
 {
@@ -25,10 +26,13 @@ public class Chatbot
 	 * The amount of chats that have occurred with this chatbot.
 	 */
 	private int chatCount;
-	
+
 	/**
-	 * Creates a Chatbot object with the supplied name and initializes the current number of chats to zero.
-	 * @param name The supplied name for the Chatbot.
+	 * Creates a Chatbot object with the supplied name and initializes the
+	 * current number of chats to zero.
+	 * 
+	 * @param name
+	 *            The supplied name for the Chatbot.
 	 */
 	public Chatbot(String name)
 	{
@@ -38,28 +42,32 @@ public class Chatbot
 		chatCount = 0;
 		fillTheMemeList();
 	}
-	
+
 	/**
 	 * Returns the name of the Chatbot object.
+	 * 
 	 * @return The current name of the Chatbot.
 	 */
 	public String getName()
 	{
 		return name;
 	}
-	
+
 	/**
 	 * This returns the current number of chats.
+	 * 
 	 * @return The current chatCount value.
 	 */
 	public int getChatCount()
 	{
 		return chatCount;
 	}
-	
+
 	/**
 	 * Sets the name of the Chatbot to the supplied name.
-	 * @param name The new name for the chatbot.
+	 * 
+	 * @param name
+	 *            The new name for the chatbot.
 	 */
 	public void setName(String name)
 	{
@@ -78,28 +86,65 @@ public class Chatbot
 		memeList.add("toddler fist");
 		memeList.add("y u no");
 	}
-	
+
 	/**
-	 * Processes input from the user against the checker methods.  Returns the next output for the view.
-	 * @param currentInput The supplied text.
+	 * Processes input from the user against the checker methods. Returns the
+	 * next output for the view.
+	 * 
+	 * @param currentInput
+	 *            The supplied text.
 	 * @return The processed text based on checker or other methods.
 	 */
 	public String processText(String currentInput)
 	{
 		String result = "";
+
+		int randomPosition = (int) (Math.random() * 3);
 		
-		if(memeChecker(currentInput))
+		if (currentInput != null && currentInput.length() > 0)
 		{
-			result = "Wow, " + currentInput + " is a meme. Wahoo!";
+			if (randomPosition == 0)
+			{
+				if (stringLengthChecker(currentInput))
+				{
+					result = "too long";
+				}
+				else
+				{
+					result = "short words";
+				}
+			}
+			else if (randomPosition == 1)
+			{
+				if (contentChecker(currentInput))
+				{
+					result = "yup you know the secret";
+				}
+				else
+				{
+					result = "try again another time";
+				}
+			}
+			else
+			{
+				if (memeChecker(currentInput))
+				{
+					result = "Wow, " + currentInput + " is a meme. Wahoo!";
+				}
+				else
+				{
+					result = "not a meme, try again";
+					
+				}
+			}
 		}
 		else
 		{
-			result = "not a meme, try again";
+			result = "use words!!!!";
 		}
-		
 		return result;
 	}
-	
+
 	/**
 	 * Private helper method to update the chatCount variable.
 	 */
@@ -107,83 +152,84 @@ public class Chatbot
 	{
 		chatCount++;
 	}
-	
+
 	/**
 	 * 
 	 * @param input
 	 * @return
 	 */
-	private boolean stringChecker(String input)
+	private boolean stringLengthChecker(String input)
 	{
 		boolean isTooLong = false;
-		
-		if(input.length() >= 20)
+
+		if (input.length() >= 20)
 		{
 			isTooLong = true;
 		}
-		
+
 		return isTooLong;
 	}
 	
+	
 	/**
-	 * Method checks if the user text contains the Chatbot's special content area text.
-	 * @param input The user supplied text.
-	 * @return Whether the user supplied text contains the content area supplied by the user.
+	 * Method checks if the user text contains the Chatbot's special content
+	 * area text.
+	 * 
+	 * @param input
+	 *            The user supplied text.
+	 * @return Whether the user supplied text contains the content area supplied
+	 *         by the user.
 	 */
 	private boolean contentChecker(String input)
 	{
 		boolean hasMyContent = false;
-		
-		if(input.contains(contentArea))
+
+		if (input.contains(contentArea))
 		{
 			hasMyContent = true;
 		}
-		
+
 		return hasMyContent;
 	}
-	
+
 	/**
 	 * Checks if the supplied text matches the list of memes.
-	 * @param input The user supplied text to check.
+	 * 
+	 * @param input
+	 *            The user supplied text to check.
 	 * @return Whether or not a meme has been supplied by the user.
 	 */
-	private boolean memeChecker(String input)
+	private boolean memeChecker(String input) 
 	{
 		boolean isAMeme = false;
-		
+
 		for (String currentMeme : memeList)
 		{
-			if(input.equalsIgnoreCase(currentMeme))
+			if (input.equalsIgnoreCase(currentMeme))
 			{
 				isAMeme = true;
 			}
 		}
-		
-		for(int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
-		{
-			if(input.equalsIgnoreCase(memeList.get(loopCounter)))
-			{
-				isAMeme = true;
-			}
-		}
-		
+
 		return isAMeme;
 	}
-	
+
 	/**
 	 * Method to check for the appropriate exit message from the user.
-	 * @param input The user supplied text.
+	 * 
+	 * @param input
+	 *            The user supplied text.
 	 * @return Whether or not the quit message has been supplied.
 	 */
 	public boolean quitChecker(String input)
 	{
 		boolean okToQuit = false;
-		
-		if(input != null && input.equals("sayonara"))
+
+		if (input != null && input.equals("sayonara"))
 		{
 			okToQuit = true;
 		}
-		
+
 		return okToQuit;
 	}
 }
