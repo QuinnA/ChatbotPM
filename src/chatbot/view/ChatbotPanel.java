@@ -28,6 +28,8 @@ public class ChatbotPanel extends JPanel
 		baseLayout = new SpringLayout();
 		chatArea = new JTextArea(5, 20);
 		chatPane = new JScrollPane(chatArea);
+		baseLayout.putConstraint(SpringLayout.NORTH, chatPane, 200, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.WEST, chatPane, 50, SpringLayout.WEST, this);
 		
 		setupPane();
 		setupPanel();
@@ -53,8 +55,6 @@ public class ChatbotPanel extends JPanel
 	
 	private void setupLayout()
 	{
-		baseLayout.putConstraint(SpringLayout.NORTH, chatPane, 50, SpringLayout.NORTH, this);
-		baseLayout.putConstraint(SpringLayout.WEST, chatPane, 20, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.WEST, firstButton, 157, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.NORTH, firstButton, 153, SpringLayout.NORTH, this);
 		baseLayout.putConstraint(SpringLayout.WEST, firstTextField, 0, SpringLayout.WEST, firstButton);
@@ -67,10 +67,17 @@ public class ChatbotPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				firstTextField.setText(firstTextField.getText()+ " -:D ");
+				String currentInput = firstTextField.getText();
+				String result = baseController.getChatbotDialog(currentInput);
+				showTextMessage(currentInput);
+				showTextMessage(result);
+				firstTextField.setText("");
 			}
-		});
-		
+		});	
 	}
-
+	
+	public void showTextMessage(String userInput)
+	{
+		chatArea.append("\n" + userInput);
+	}
 }

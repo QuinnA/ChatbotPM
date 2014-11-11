@@ -4,10 +4,12 @@ import javax.swing.JOptionPane;
 
 import chatbot.model.Chatbot;
 import chatbot.view.ChatbotFrame;
+import chatbot.view.ChatbotPanel;
 import chatbot.view.ChatbotView;
 
 /**
  * Runs the Chatbot Project. Owns the model and associated views.
+ * 
  * @author Cody Henrichsen
  * @version 1.2 10/2/14 - cleaned the quit method.
  */
@@ -33,9 +35,10 @@ public class ChatbotAppController
 	 * Reference to the GUI JFrame object for the application.
 	 */
 	private ChatbotFrame appFrame;
-	
+
 	/**
-	 * Constructor for the AppController. Initializes the Model and View components.
+	 * Constructor for the AppController. Initializes the Model and View
+	 * components.
 	 */
 	public ChatbotAppController()
 	{
@@ -45,31 +48,43 @@ public class ChatbotAppController
 		startMessage = "Welcome to the " + mySillyChatbot.getName() + " chatbot. What is your name?";
 		quitMessage = "goodbye cruel user :(";
 	}
-	
+
 	/**
 	 * Getter method for the applications Chatbot.
+	 * 
 	 * @return The Chatbot for the application.
 	 */
 	public Chatbot getMySillyChatbot()
 	{
 		return mySillyChatbot;
 	}
-	
+
 	/**
-	 * Startup method for the Chatbot application. This is the standard method we use in all of our projects.
+	 * Startup method for the Chatbot application. This is the standard method
+	 * we use in all of our projects.
 	 */
 	public void start()
 	{
-		String result = applicationView.showChatbotDialog(startMessage);
-		
-//		while(!mySillyChatbot.quitChecker(result))
-//		{
-//			result = mySillyChatbot.processText(result);
-//			result = applicationView.showChatbotDialog(result);
-//		}
-//		quit();
+		((ChatbotPanel) appFrame.getContentPane()).showTextMessage(startMessage);
+
+		// ChatbotPanel testPanel = (ChatbotPanel) appFrame.getContentPane();
+		// testPanel.showTextMessage(startMessage);
 	}
-	
+
+	public String getChatbotDialog(String input)
+	{
+		String result = "";
+		
+		if(mySillyChatbot.quitChecker(input))
+		{
+			quit();
+		}
+		
+		result = mySillyChatbot.processText(input);
+		
+		return result;
+	}
+
 	/**
 	 * Quit method for the Chatbot application.
 	 */

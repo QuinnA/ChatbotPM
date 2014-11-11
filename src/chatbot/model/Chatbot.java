@@ -26,6 +26,10 @@ public class Chatbot
 	 * The amount of chats that have occurred with this chatbot.
 	 */
 	private int chatCount;
+	/**
+	 * The current user of the Chatbot object.
+	 */
+	private ChatbotUser myUser;
 
 	/**
 	 * Creates a Chatbot object with the supplied name and initializes the
@@ -40,6 +44,7 @@ public class Chatbot
 		this.name = name;
 		contentArea = "";
 		chatCount = 0;
+		myUser = new ChatbotUser();
 		fillTheMemeList();
 	}
 
@@ -61,6 +66,16 @@ public class Chatbot
 	public int getChatCount()
 	{
 		return chatCount;
+	}
+
+	public ChatbotUser getMyUser()
+	{
+		return myUser;
+	}
+
+	public void setMyUser(ChatbotUser myUser)
+	{
+		this.myUser = myUser;
 	}
 
 	/**
@@ -98,8 +113,15 @@ public class Chatbot
 	public String processText(String currentInput)
 	{
 		String result = "";
+		
+		if(getChatCount() < 7)
+		{
+			//Ask questions about all data members here
+			//you will need ifs or a switch
+			//assign via myUser.set...
+		}
 
-		int randomPosition = (int) (Math.random() * 3);
+		int randomPosition = (int) (Math.random() * 4);
 		
 		if (currentInput != null && currentInput.length() > 0)
 		{
@@ -125,7 +147,7 @@ public class Chatbot
 					result = "try again another time";
 				}
 			}
-			else
+			else if(randomPosition == 2)
 			{
 				if (memeChecker(currentInput))
 				{
@@ -137,11 +159,16 @@ public class Chatbot
 					
 				}
 			}
+			else
+			{
+				 //Talk about the user here :D
+			}
 		}
 		else
 		{
 			result = "use words!!!!";
 		}
+		updateChatCount();
 		return result;
 	}
 
@@ -169,7 +196,6 @@ public class Chatbot
 
 		return isTooLong;
 	}
-	
 	
 	/**
 	 * Method checks if the user text contains the Chatbot's special content
