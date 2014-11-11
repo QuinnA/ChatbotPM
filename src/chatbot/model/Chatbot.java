@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * The chatbot model class. Used for checking and manipulating Strings.
  * 
  * @author Cody Henrichsen
- * @version 1.2 10/9/14
+ * @version 1.4 11/11/14 Updated processText and added a checker.
  */
 public class Chatbot
 {
@@ -30,6 +30,10 @@ public class Chatbot
 	 * The current user of the Chatbot object.
 	 */
 	private ChatbotUser myUser;
+	/**
+	 * The list of user input for the Chatbot
+	 */
+	private ArrayList<String> userInputList;
 
 	/**
 	 * Creates a Chatbot object with the supplied name and initializes the
@@ -41,6 +45,7 @@ public class Chatbot
 	public Chatbot(String name)
 	{
 		memeList = new ArrayList<String>();
+		userInputList = new ArrayList<String>();
 		this.name = name;
 		contentArea = "";
 		chatCount = 0;
@@ -69,7 +74,7 @@ public class Chatbot
 	}
 
 	public ChatbotUser getMyUser()
-	{
+	{	
 		return myUser;
 	}
 
@@ -121,7 +126,7 @@ public class Chatbot
 			//assign via myUser.set...
 		}
 
-		int randomPosition = (int) (Math.random() * 4);
+		int randomPosition = (int) (Math.random() * 6);
 		
 		if (currentInput != null && currentInput.length() > 0)
 		{
@@ -159,9 +164,26 @@ public class Chatbot
 					
 				}
 			}
-			else
+			else if(randomPosition == 3)
 			{
 				 //Talk about the user here :D
+			}
+			else if(randomPosition == 4)
+			{
+				//add to our list
+				userInputList.add(currentInput);
+				result = "Thank you for the comment";
+			}
+			else
+			{
+				if(userInputChecker(currentInput))
+				{
+					
+				}
+				else
+				{
+					
+				}
 			}
 		}
 		else
@@ -171,6 +193,24 @@ public class Chatbot
 		updateChatCount();
 		return result;
 	}
+	
+	private boolean userInputChecker(String userInput)
+	{
+		boolean matchesInput = false;
+		
+		for(int loopCount = 0; loopCount < userInputList.size(); loopCount++)
+		{
+			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			{
+				matchesInput = true;
+				userInputList.remove(loopCount);
+				loopCount--;
+			}
+		}
+		
+		return matchesInput;
+	}
+	
 
 	/**
 	 * Private helper method to update the chatCount variable.
