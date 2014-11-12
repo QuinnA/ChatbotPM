@@ -33,7 +33,8 @@ public class Chatbot
 	/**
 	 * The list of user input for the Chatbot
 	 */
-	private ArrayList<String> userInputList;
+	private ArrayList<String> userInputList;	
+	
 
 	/**
 	 * Creates a Chatbot object with the supplied name and initializes the
@@ -51,6 +52,7 @@ public class Chatbot
 		chatCount = 0;
 		myUser = new ChatbotUser();
 		fillTheMemeList();
+	
 	}
 
 	/**
@@ -74,7 +76,7 @@ public class Chatbot
 	}
 
 	public ChatbotUser getMyUser()
-	{	
+	{
 		return myUser;
 	}
 
@@ -118,18 +120,27 @@ public class Chatbot
 	public String processText(String currentInput)
 	{
 		String result = "";
-		
-		if(getChatCount() < 7)
-		{
-			//Ask questions about all data members here
-			//you will need ifs or a switch
-			//assign via myUser.set...
-		}
 
-		int randomPosition = (int) (Math.random() * 6);
-		
-		if (currentInput != null && currentInput.length() > 0)
+		if (getChatCount() < 5)
 		{
+			// Ask questions about all data members here
+			// you will need ifs or a switch
+			// assign via myUser.set...
+			if (getChatCount() == 0)
+			{
+				myUser.setUserName(currentInput);
+				result = "Good name " + myUser.getUserName() + " how old are you?";
+			}
+			else if (getChatCount() == 1)
+			{
+				int userAge = Integer.parseInt(currentInput);
+				myUser.setAge(userAge);
+			}
+			// continue for other user info fields
+		}
+		else if (currentInput != null && currentInput.length() > 0)
+		{
+			int randomPosition = (int) (Math.random() * 6);
 			if (randomPosition == 0)
 			{
 				if (stringLengthChecker(currentInput))
@@ -152,7 +163,7 @@ public class Chatbot
 					result = "try again another time";
 				}
 			}
-			else if(randomPosition == 2)
+			else if (randomPosition == 2)
 			{
 				if (memeChecker(currentInput))
 				{
@@ -161,28 +172,28 @@ public class Chatbot
 				else
 				{
 					result = "not a meme, try again";
-					
+
 				}
 			}
-			else if(randomPosition == 3)
+			else if (randomPosition == 3)
 			{
-				 //Talk about the user here :D
+				// Talk about the user here :D
 			}
-			else if(randomPosition == 4)
+			else if (randomPosition == 4)
 			{
-				//add to our list
+				// add to our list
 				userInputList.add(currentInput);
 				result = "Thank you for the comment";
 			}
 			else
 			{
-				if(userInputChecker(currentInput))
+				if (userInputChecker(currentInput))
 				{
-					
+
 				}
 				else
 				{
-					
+
 				}
 			}
 		}
@@ -193,24 +204,23 @@ public class Chatbot
 		updateChatCount();
 		return result;
 	}
-	
+
 	private boolean userInputChecker(String userInput)
 	{
 		boolean matchesInput = false;
-		
-		for(int loopCount = 0; loopCount < userInputList.size(); loopCount++)
+
+		for (int loopCount = 0; loopCount < userInputList.size(); loopCount++)
 		{
-			if(userInput.equalsIgnoreCase(userInputList.get(loopCount)))
+			if (userInput.equalsIgnoreCase(userInputList.get(loopCount)))
 			{
 				matchesInput = true;
 				userInputList.remove(loopCount);
 				loopCount--;
 			}
 		}
-		
+
 		return matchesInput;
 	}
-	
 
 	/**
 	 * Private helper method to update the chatCount variable.
@@ -236,7 +246,7 @@ public class Chatbot
 
 		return isTooLong;
 	}
-	
+
 	/**
 	 * Method checks if the user text contains the Chatbot's special content
 	 * area text.
@@ -265,7 +275,7 @@ public class Chatbot
 	 *            The user supplied text to check.
 	 * @return Whether or not a meme has been supplied by the user.
 	 */
-	private boolean memeChecker(String input) 
+	private boolean memeChecker(String input)
 	{
 		boolean isAMeme = false;
 

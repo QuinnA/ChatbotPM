@@ -8,6 +8,7 @@ public class ChatbotUser
 	private int age;
 	private boolean hasTattoos;
 	private boolean needsCorrectiveLenses;
+	private double weight;
 	
 	public ChatbotUser()
 	{
@@ -15,6 +16,7 @@ public class ChatbotUser
 		this.age = -999;
 		this.hasTattoos = false;
 		this.needsCorrectiveLenses = false;
+		this.weight = -45.7876;
 	}
 
 	public String getUserName()
@@ -27,14 +29,24 @@ public class ChatbotUser
 		return age;
 	}
 
-	public boolean isHasTattoos()
+	public boolean hasTattoos()
 	{
 		return hasTattoos;
 	}
 
-	public boolean isNeedsCorrectiveLenses()
+	public boolean needsCorrectiveLenses()
 	{
 		return needsCorrectiveLenses;
+	}
+	
+	public double getWeight()
+	{
+		return weight;
+	}
+	
+	public void setWeight(double weight)
+	{
+		this.weight = weight;
 	}
 
 	public void setUserName(String userName)
