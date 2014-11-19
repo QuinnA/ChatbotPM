@@ -74,11 +74,19 @@ public class Chatbot
 		return chatCount;
 	}
 
+	/**
+	 * Getter method for the ChatbotUser object.
+	 * @return The current ChatbotUser.
+	 */
 	public ChatbotUser getMyUser()
 	{
 		return myUser;
 	}
 
+	/**
+	 * Setter for the ChatbotUser.
+	 * @param myUser The replacement user.
+	 */
 	public void setMyUser(ChatbotUser myUser)
 	{
 		this.myUser = myUser;
@@ -307,9 +315,9 @@ public class Chatbot
 	}
 
 	/**
-	 * 
-	 * @param input
-	 * @return
+	 * Checks the input based on the length.
+	 * @param input The user supplied text.
+	 * @return Whether it matched the if test for the length.
 	 */
 	private boolean stringLengthChecker(String input)
 	{
