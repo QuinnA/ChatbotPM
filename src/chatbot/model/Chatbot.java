@@ -276,6 +276,11 @@ public class Chatbot
 		return userBasedResponse;
 	}
 
+	/**
+	 * Checks for existing input in the userInputList and removes it.
+	 * @param userInput The current text supplied by the user.
+	 * @return Whether it was in the list and removed or not.
+	 */
 	private boolean userInputChecker(String userInput)
 	{
 		boolean matchesInput = false;
