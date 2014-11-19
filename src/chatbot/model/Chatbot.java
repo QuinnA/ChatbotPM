@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * The chatbot model class. Used for checking and manipulating Strings.
  * 
  * @author Cody Henrichsen
- * @version 1.4 11/11/14 Updated processText and added a checker.
+ * @version 1.5 11/19/14 Updated processText again and added a method for handling user info.
  */
 public class Chatbot
 {
@@ -33,8 +33,7 @@ public class Chatbot
 	/**
 	 * The list of user input for the Chatbot
 	 */
-	private ArrayList<String> userInputList;	
-	
+	private ArrayList<String> userInputList;
 
 	/**
 	 * Creates a Chatbot object with the supplied name and initializes the
@@ -52,7 +51,7 @@ public class Chatbot
 		chatCount = 0;
 		myUser = new ChatbotUser();
 		fillTheMemeList();
-	
+
 	}
 
 	/**
@@ -123,86 +122,158 @@ public class Chatbot
 
 		if (getChatCount() < 5)
 		{
-			// Ask questions about all data members here
-			// you will need ifs or a switch
-			// assign via myUser.set...
-			if (getChatCount() == 0)
-			{
-				myUser.setUserName(currentInput);
-				result = "Good name " + myUser.getUserName() + " how old are you?";
-			}
-			else if (getChatCount() == 1)
-			{
-				int userAge = Integer.parseInt(currentInput);
-				myUser.setAge(userAge);
-			}
-			// continue for other user info fields
+			result = introduceUser(currentInput);
 		}
 		else if (currentInput != null && currentInput.length() > 0)
 		{
-			int randomPosition = (int) (Math.random() * 6);
-			if (randomPosition == 0)
-			{
-				if (stringLengthChecker(currentInput))
-				{
-					result = "too long";
-				}
-				else
-				{
-					result = "short words";
-				}
-			}
-			else if (randomPosition == 1)
-			{
-				if (contentChecker(currentInput))
-				{
-					result = "yup you know the secret";
-				}
-				else
-				{
-					result = "try again another time";
-				}
-			}
-			else if (randomPosition == 2)
-			{
-				if (memeChecker(currentInput))
-				{
-					result = "Wow, " + currentInput + " is a meme. Wahoo!";
-				}
-				else
-				{
-					result = "not a meme, try again";
-
-				}
-			}
-			else if (randomPosition == 3)
-			{
-				// Talk about the user here :D
-			}
-			else if (randomPosition == 4)
-			{
-				// add to our list
-				userInputList.add(currentInput);
-				result = "Thank you for the comment";
-			}
-			else
-			{
-				if (userInputChecker(currentInput))
-				{
-
-				}
-				else
-				{
-
-				}
-			}
+			result = randomChatConversation(currentInput);
 		}
 		else
 		{
 			result = "use words!!!!";
+			chatCount--;
 		}
 		updateChatCount();
 		return result;
+	}
+
+	/**
+	 * Introduces the user of the Chatbot and gathers information about them to be used later in the project.
+	 * @param input The supplied answers to user information questions.
+	 * @return The next question for the user of the Chatbot.
+	 */
+	private String introduceUser(String input)
+	{
+		String userQuestion = "";
+
+		if (getChatCount() == 0)
+		{
+			myUser.setUserName(input);
+			userQuestion = "Good name " + myUser.getUserName() + " how old are you?";
+		}
+		else if (getChatCount() == 1)
+		{
+			int userAge = Integer.parseInt(input);
+			myUser.setAge(userAge);
+			userQuestion = "Garsh, you are really old " + myUser.getUserName() + " how much do you weigh?";
+		}
+		else if (getChatCount() == 2)
+		{
+			double userWeight = Double.parseDouble(input);
+			myUser.setWeight(userWeight);
+			userQuestion = "Yikes that is a lot less than a dwarf star " + myUser.getUserName() + " do you have tattoos?";
+		}
+		else if (getChatCount() == 3)
+		{
+			boolean userTatts = Boolean.parseBoolean(input);
+			myUser.setHasTattoos(userTatts);
+			userQuestion = "Some comment about tattoos" + myUser.getUserName() + " do you have corrective lenses?";
+		}
+		else
+		{
+			boolean userLenses= Boolean.parseBoolean(input);
+			myUser.setNeedsCorrectiveLenses(userLenses);
+			userQuestion = "I love my glasses :D " + myUser.getUserName() + " What do you want to talk about????????";
+		}
+
+
+		return userQuestion;
+	}
+
+	/**
+	 * Selects a random topic for the chatbot to talk about using the user's input as a comment or reference in the topic.
+	 * @param input The user supplied input.
+	 * @return The next Chatbot conversation.
+	 */
+	private String randomChatConversation(String input)
+	{
+		String conversation = "";
+		
+		int randomPosition = (int) (Math.random() * 6);
+		if (randomPosition == 0)
+		{
+			if (stringLengthChecker(input))
+			{
+				conversation = "too long";
+			}
+			else
+			{
+				conversation = "short words";
+			}
+		}
+		else if (randomPosition == 1)
+		{
+			if (contentChecker(input))
+			{
+				conversation = "yup you know the secret";
+			}
+			else
+			{
+				conversation = "try again another time";
+			}
+		}
+		else if (randomPosition == 2)
+		{
+			if (memeChecker(input))
+			{
+				conversation = "Wow, " + input + " is a meme. Wahoo!";
+			}
+			else
+			{
+				conversation = "not a meme, try again";
+			}
+		}
+		else if (randomPosition == 3)
+		{
+			conversation = userTopic(input);
+		}
+		else if (randomPosition == 4)
+		{
+			// add to our list
+			userInputList.add(input);
+			conversation = "Thank you for the comment";
+		}
+		else
+		{
+			if (userInputChecker(input))
+			{
+				conversation = "That was nice - you removed it from the list";
+			}
+			else
+			{
+				conversation = "that wasn't in the conversation before";
+			}
+		}
+
+		return conversation;
+	}
+	
+	/**
+	 * Provides output based on the ChatbotUser object. Uses a switch/case structure for testing.
+	 * @param userInput The user input 
+	 * @return Resulting conversation.
+	 */
+	private String userTopic(String userInput)
+	{
+		String userBasedResponse = "";
+		
+		int randomUserTopic = (int) (Math.random() * 6);
+		
+		switch(randomUserTopic)
+		{
+			case 1:
+				userBasedResponse = myUser.hasTattoos() + " is the response to tattoos :D";
+				break;
+			case 0:
+				userBasedResponse = myUser.getUserName() + " is a silly name :P";
+				break;
+			default:
+				userBasedResponse = myUser.getAge() + " is realllly reallllllly old";
+				break;
+		}
+		
+		
+		return userBasedResponse;
 	}
 
 	private boolean userInputChecker(String userInput)
