@@ -6,7 +6,8 @@ import java.util.ArrayList;
  * The chatbot model class. Used for checking and manipulating Strings.
  * 
  * @author Cody Henrichsen
- * @version 1.5 11/19/14 Updated processText again and added a method for handling user info.
+ * @version 1.5 11/19/14 Updated processText again and added a method for
+ *          handling user info.
  */
 public class Chatbot
 {
@@ -76,6 +77,7 @@ public class Chatbot
 
 	/**
 	 * Getter method for the ChatbotUser object.
+	 * 
 	 * @return The current ChatbotUser.
 	 */
 	public ChatbotUser getMyUser()
@@ -85,7 +87,9 @@ public class Chatbot
 
 	/**
 	 * Setter for the ChatbotUser.
-	 * @param myUser The replacement user.
+	 * 
+	 * @param myUser
+	 *            The replacement user.
 	 */
 	public void setMyUser(ChatbotUser myUser)
 	{
@@ -146,8 +150,11 @@ public class Chatbot
 	}
 
 	/**
-	 * Introduces the user of the Chatbot and gathers information about them to be used later in the project.
-	 * @param input The supplied answers to user information questions.
+	 * Introduces the user of the Chatbot and gathers information about them to
+	 * be used later in the project.
+	 * 
+	 * @param input
+	 *            The supplied answers to user information questions.
 	 * @return The next question for the user of the Chatbot.
 	 */
 	private String introduceUser(String input)
@@ -179,25 +186,27 @@ public class Chatbot
 		}
 		else
 		{
-			boolean userLenses= Boolean.parseBoolean(input);
+			boolean userLenses = Boolean.parseBoolean(input);
 			myUser.setNeedsCorrectiveLenses(userLenses);
 			userQuestion = "I love my glasses :D " + myUser.getUserName() + " What do you want to talk about????????";
 		}
-
 
 		return userQuestion;
 	}
 
 	/**
-	 * Selects a random topic for the chatbot to talk about using the user's input as a comment or reference in the topic.
-	 * @param input The user supplied input.
+	 * Selects a random topic for the chatbot to talk about using the user's
+	 * input as a comment or reference in the topic.
+	 * 
+	 * @param input
+	 *            The user supplied input.
 	 * @return The next Chatbot conversation.
 	 */
 	private String randomChatConversation(String input)
 	{
 		String conversation = "";
-		
-		int randomPosition = (int) (Math.random() * 6);
+
+		int randomPosition = (int) (Math.random() * 7);
 		if (randomPosition == 0)
 		{
 			if (stringLengthChecker(input))
@@ -241,6 +250,17 @@ public class Chatbot
 			userInputList.add(input);
 			conversation = "Thank you for the comment";
 		}
+		else if (randomPosition == 5)
+		{
+			if (mashChecker(input))
+			{
+				conversation = mashingDetected(input);
+			}
+			else
+			{
+				conversation = noMashingDetected(input);
+			}
+		}
 		else
 		{
 			if (userInputChecker(input))
@@ -255,38 +275,84 @@ public class Chatbot
 
 		return conversation;
 	}
-	
+
+	private String mashingDetected(String input)
+	{
+		String mashed = "";
+
+		mashed = input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+		mashed += input.substring(input.length() / 2);
+
+		return mashed;
+	}
+
+	private String noMashingDetected(String input)
+	{
+		String noMashing = "Thank you for not mashing your keyboard with ";
+		if (input.length() > 1)
+		{
+			noMashing += input.substring(input.length() / 3, input.length() / 2);
+		}
+		return noMashing;
+	}
+
 	/**
-	 * Provides output based on the ChatbotUser object. Uses a switch/case structure for testing.
-	 * @param userInput The user input 
+	 * Checker for keyboard mashing.
+	 * 
+	 * @param userInput
+	 *            The user supplied text.
+	 * @return Whether mashing has been detected.
+	 */
+	private boolean mashChecker(String userInput)
+	{
+		boolean isMashing = false;
+
+		if (userInput.indexOf("sdf") > -1)
+		{
+			isMashing = true;
+		}
+
+		return isMashing;
+	}
+
+	/**
+	 * Provides output based on the ChatbotUser object. Uses a switch/case
+	 * structure for testing.
+	 * 
+	 * @param userInput
+	 *            The user input
 	 * @return Resulting conversation.
 	 */
 	private String userTopic(String userInput)
 	{
 		String userBasedResponse = "";
-		
+
 		int randomUserTopic = (int) (Math.random() * 6);
-		
-		switch(randomUserTopic)
+
+		switch (randomUserTopic)
 		{
-			case 1:
-				userBasedResponse = myUser.hasTattoos() + " is the response to tattoos :D";
-				break;
-			case 0:
-				userBasedResponse = myUser.getUserName() + " is a silly name :P";
-				break;
-			default:
-				userBasedResponse = myUser.getAge() + " is realllly reallllllly old";
-				break;
+		case 1:
+			userBasedResponse = myUser.hasTattoos() + " is the response to tattoos :D";
+			break;
+		case 0:
+			userBasedResponse = myUser.getUserName() + " is a silly name :P";
+			break;
+		default:
+			userBasedResponse = myUser.getAge() + " is realllly reallllllly old";
+			break;
 		}
-		
-		
+
 		return userBasedResponse;
 	}
 
 	/**
 	 * Checks for existing input in the userInputList and removes it.
-	 * @param userInput The current text supplied by the user.
+	 * 
+	 * @param userInput
+	 *            The current text supplied by the user.
 	 * @return Whether it was in the list and removed or not.
 	 */
 	private boolean userInputChecker(String userInput)
@@ -316,7 +382,9 @@ public class Chatbot
 
 	/**
 	 * Checks the input based on the length.
-	 * @param input The user supplied text.
+	 * 
+	 * @param input
+	 *            The user supplied text.
 	 * @return Whether it matched the if test for the length.
 	 */
 	private boolean stringLengthChecker(String input)
